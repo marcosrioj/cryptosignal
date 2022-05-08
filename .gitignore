@@ -1,5 +1,6 @@
 # Freqtrade rules
 *.sqlite
+*.sqlite-journal
 *.sqlite-shm
 *.sqlite-wal
 logfile.txt

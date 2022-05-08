@@ -9,8 +9,7 @@ NFIX_BB_RPB
 
 ## Mudar onde carrega historico de trades
 C:\repos\freqtrade_bin\.env\Lib\site-packages\ccxt\async_support\base\exchange.py, line 110
+C:\repos\freqtrade_bin\.env\Lib\site-packages\ccxt\base\exchange.py, line 613
 Add it:
         if "/klines?" in url and "startTime" not in url:
             url.replace("https://api.binance.com/api/v3", "http://localhost:5000")
-
-python setup.py install
