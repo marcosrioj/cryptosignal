@@ -1,0 +1,249 @@
+
+{
+    "max_open_trades": 5,
+    "stake_currency": "USDT",
+    "stake_amount": 200,
+    "tradable_balance_ratio": 0.99,
+    "fiat_display_currency": "USD",
+    "dry_run": true,
+    "cancel_open_orders_on_exit": false,
+    "unfilledtimeout": {
+        "buy": 10,
+        "sell": 10,
+        "exit_timeout_count": 0,
+        "unit": "minutes"
+    },
+    "bid_strategy": {
+        "price_side": "bid",
+        "ask_last_balance": 0.0,
+        "use_order_book": true,
+        "order_book_top": 1,
+        "check_depth_of_market": {
+            "enabled": false,
+            "bids_to_ask_delta": 1
+        }
+    },
+    "ask_strategy": {
+        "price_side": "ask",
+        "use_order_book": true,
+        "order_book_top": 1
+    },
+    "exchange": {
+        "name": "binance",
+        "key": "",
+        "secret": "",
+        "ccxt_config": {},
+        "ccxt_async_config": {},
+        "pair_whitelist": [
+            "BTC/USDT"
+            ,"ETH/USDT"
+            ,"BCH/USDT"
+            ,"XRP/USDT"
+            ,"EOS/USDT"
+            ,"LTC/USDT"
+            ,"TRX/USDT"
+            ,"ETC/USDT"
+            ,"LINK/USDT"
+            ,"XLM/USDT"
+            ,"ADA/USDT"
+            ,"XMR/USDT"
+            ,"DASH/USDT"
+            ,"ZEC/USDT"
+            ,"XTZ/USDT"
+            ,"BNB/USDT"
+            ,"ATOM/USDT"
+            ,"ONT/USDT"
+            ,"IOTA/USDT"
+            ,"BAT/USDT"
+            ,"VET/USDT"
+            ,"NEO/USDT"
+            ,"QTUM/USDT"
+            ,"IOST/USDT"
+            ,"THETA/USDT"
+            ,"ALGO/USDT"
+            ,"ZIL/USDT"
+            ,"KNC/USDT"
+            ,"ZRX/USDT"
+            ,"COMP/USDT"
+            ,"OMG/USDT"
+            ,"DOGE/USDT"
+            ,"SXP/USDT"
+            ,"KAVA/USDT"
+            ,"BAND/USDT"
+            ,"RLC/USDT"
+            ,"WAVES/USDT"
+            ,"MKR/USDT"
+            ,"SNX/USDT"
+            ,"DOT/USDT"
+            ,"YFI/USDT"
+            ,"BAL/USDT"
+            ,"CRV/USDT"
+            ,"TRB/USDT"
+            ,"YFII/USDT"
+            ,"RUNE/USDT"
+            ,"SUSHI/USDT"
+            ,"SRM/USDT"
+            ,"EGLD/USDT"
+            ,"SOL/USDT"
+            ,"ICX/USDT"
+            ,"STORJ/USDT"
+            ,"BLZ/USDT"
+            ,"UNI/USDT"
+            ,"AVAX/USDT"
+            ,"FTM/USDT"
+            ,"HNT/USDT"
+            ,"ENJ/USDT"
+            ,"FLM/USDT"
+            ,"TOMO/USDT"
+            ,"REN/USDT"
+            ,"KSM/USDT"
+            ,"NEAR/USDT"
+            ,"AAVE/USDT"
+            ,"FIL/USDT"
+            ,"RSR/USDT"
+            ,"LRC/USDT"
+            ,"MATIC/USDT"
+            ,"OCEAN/USDT"
+            ,"CVC/USDT"
+            ,"BEL/USDT"
+            ,"CTK/USDT"
+            ,"AXS/USDT"
+            ,"ALPHA/USDT"
+            ,"ZEN/USDT"
+            ,"SKL/USDT"
+            ,"GRT/USDT"
+            ,"1INCH/USDT"
+            ,"AKRO/USDT"
+            ,"CHZ/USDT"
+            ,"SAND/USDT"
+            ,"ANKR/USDT"
+            ,"LUNA/USDT"
+            ,"BTS/USDT"
+            ,"LIT/USDT"
+            ,"UNFI/USDT"
+            ,"DODO/USDT"
+            ,"REEF/USDT"
+            ,"RVN/USDT"
+            ,"SFP/USDT"
+            ,"XEM/USDT"
+            ,"BTCST/USDT"
+            ,"COTI/USDT"
+            ,"CHR/USDT"
+            ,"MANA/USDT"
+            ,"ALICE/USDT"
+            ,"HBAR/USDT"
+            ,"ONE/USDT"
+            ,"LINA/USDT"
+            ,"STMX/USDT"
+            ,"DENT/USDT"
+            ,"CELR/USDT"
+            ,"HOT/USDT"
+            ,"MTL/USDT"
+            ,"OGN/USDT"
+            ,"NKN/USDT"
+            ,"SC/USDT"
+            ,"DGB/USDT"
+            ,"ICP/USDT"
+            ,"BAKE/USDT"
+            ,"GTC/USDT"
+            ,"TLM/USDT"
+            ,"IOTX/USDT"
+            ,"AUDIO/USDT"
+            ,"RAY/USDT"
+            ,"C98/USDT"
+            ,"MASK/USDT"
+            ,"ATA/USDT"
+            ,"DYDX/USDT"
+            ,"GALA/USDT"
+            ,"CELO/USDT"
+            ,"AR/USDT"
+            ,"KLAY/USDT"
+            ,"ARPA/USDT"
+            ,"CTSI/USDT"
+            ,"LPT/USDT"
+            ,"ENS/USDT"
+            ,"PEOPLE/USDT"
+            ,"ANT/USDT"
+            ,"ROSE/USDT"
+            ,"DUSK/USDT"
+            ,"FLOW/USDT"
+            ,"IMX/USDT"
+            ,"API3/USDT"
+            ,"ANC/USDT"
+            ,"GMT/USDT"
+            ,"APE/USDT"
+            ,"BNX/USDT"
+            ,"JASMY/USDT"
+            ,"FTT/USDT"
+            ,"WOO/USDT"
+            ,"DAR/USDT"
+            ,"GAL/USDT"
+        ],
+        "pair_blacklist": [
+            "BNB/.*"
+        ]
+    },
+    "pairlists": [
+        {"method": "StaticPairList"}
+    ],
+    "edge": {
+        "enabled": false,
+        "process_throttle_secs": 3600,
+        "calculate_since_number_of_days": 7,
+        "allowed_risk": 0.01,
+        "stoploss_range_min": -0.01,
+        "stoploss_range_max": -0.02,
+        "stoploss_range_step": -0.01,
+        "minimum_winrate": 0.80,
+        "minimum_expectancy": 0.20,
+        "min_trade_number": 10,
+        "max_trade_duration_minute": 1440,
+        "remove_pumps": false
+    },
+    "telegram": {
+        "enabled": true,
+        "token": "5264889506:AAEHPlrbTIDwUU2idiKUGH5K9D8zqEp-Chw",
+        "chat_id": "-630559687",
+        "notification_settings": {
+            "status": "silent",
+            "warning": "silent",
+            "startup": "silent",
+            "buy": "silent",
+            "sell": {
+                "roi": "silent",
+                "emergency_sell": "silent",
+                "force_sell": "silent",
+                "sell_signal": "on",
+                "trailing_stop_loss": "silent",
+                "stop_loss": "on",
+                "stoploss_on_exchange": "silent",
+                "custom_sell": "silent"
+            },
+            "buy_cancel": "silent",
+            "sell_cancel": "silent",
+            "buy_fill": "on",
+            "sell_fill": "on",
+            "protection_trigger": "on",
+            "protection_trigger_global": "on"
+        },
+        "reload": true,
+        "balance_dust_level": 0.01
+    },
+    "api_server": {
+        "enabled": false,
+        "listen_ip_address": "127.0.0.1",
+        "listen_port": 8080,
+        "verbosity": "error",
+        "enable_openapi": false,
+        "jwt_secret_key": "f3f91b65747d28f473a72d02334e1be0b451a0c4d815b78011768d1ce8343800",
+        "CORS_origins": [],
+        "username": "freqtrader",
+        "password": "freqtrader"
+    },
+    "bot_name": "freqtrade",
+    "initial_state": "running",
+    "forcebuy_enable": false,
+    "internals": {
+        "process_throttle_secs": 5
+    }
+}
