@@ -366,7 +366,7 @@
         "listen_port": 8080,
         "verbosity": "error",
         "jwt_secret_key": "f3f91b65747d28f473a72d02334e1be0b451a0c4d815b78011768d1ce8343800",
-        "CORS_origins": [],
+        "CORS_origins": ["http://localhost:3000", "http://localhost:8080"],
         "username": "freqtrader",
         "password": "freqtrader"
     },
