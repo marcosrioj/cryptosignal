@@ -1,0 +1,1 @@
+C:\repos\freqtrade_bin\.env\Scripts\freqtrade backtesting -s Strategy005 --config C:/repos/cryptosignal/user_data/configs/config_Strategy005.json
