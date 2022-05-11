@@ -4,10 +4,32 @@ from freqtrade.strategy import IStrategy
 from typing import Dict, List
 from functools import reduce
 from pandas import DataFrame
+from datetime import datetime
 # --------------------------------
 
 import talib.abstract as ta
 
+class EntryControl: 
+
+    entryControlList = []
+
+    @staticmethod
+    def tryEntry():
+        # EntryControl.entryControlList.append(datetime.now())
+        # if (len(EntryControl.entryControlList) < 4):
+        #     return 0
+
+        # startDatetime = EntryControl.entryControlList[0]
+        # endDatetime = EntryControl.entryControlList[-1]
+        # diff = endDatetime - startDatetime
+        # diff_in_minutes = diff.total_seconds() / 60
+
+        # EntryControl.entryControlList = []
+        # if (diff_in_minutes > 120):            
+        #     EntryControl.entryControlList.append(datetime.now())
+        #     return 0
+
+        return 1
 
 class Strategy004(IStrategy):
 
@@ -135,7 +157,7 @@ class Strategy004(IStrategy):
                 (dataframe['mean-volume'] > 0.75) &
                 (dataframe['close'] > 0.00000100)
             ),
-            'enter_long'] = 1
+            'enter_long'] = EntryControl.tryEntry()
 
         return dataframe
 
