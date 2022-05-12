@@ -9,28 +9,6 @@ from datetime import datetime
 
 import talib.abstract as ta
 
-class EntryControl: 
-
-    entryControlList = []
-
-    @staticmethod
-    def tryEntry():
-        # EntryControl.entryControlList.append(datetime.now())
-        # if (len(EntryControl.entryControlList) < 4):
-        #     return 0
-
-        # startDatetime = EntryControl.entryControlList[0]
-        # endDatetime = EntryControl.entryControlList[-1]
-        # diff = endDatetime - startDatetime
-        # diff_in_minutes = diff.total_seconds() / 60
-
-        # EntryControl.entryControlList = []
-        # if (diff_in_minutes > 120):            
-        #     EntryControl.entryControlList.append(datetime.now())
-        #     return 0
-
-        return 1
-
 class Strategy004(IStrategy):
 
     """
@@ -54,6 +32,8 @@ class Strategy004(IStrategy):
     # Optimal stoploss designed for the strategy
     # This attribute will be overridden if the config file contains "stoploss"
     stoploss = -0.025
+
+    entryControlDict = {}
 
     # Optimal timeframe for the strategy
     timeframe = '5m'
@@ -157,9 +137,32 @@ class Strategy004(IStrategy):
                 (dataframe['mean-volume'] > 0.75) &
                 (dataframe['close'] > 0.00000100)
             ),
-            'enter_long'] = EntryControl.tryEntry()
+            'enter_long'] = 1
 
         return dataframe
+
+    def confirm_trade_entry(self, pair: str, order_type: str, amount: float, rate: float,
+                            time_in_force: str, current_time: datetime, entry_tag: str,
+                            side: str, **kwargs) -> bool:
+
+        if pair not in self.entryControlDict:
+            self.entryControlDict[pair] = []
+
+        self.entryControlDict[pair].append(current_time)
+        if (len(self.entryControlDict[pair]) < 2):
+            return False
+
+        startDatetime = self.entryControlDict[pair][0]
+        endDatetime = self.entryControlDict[pair][-1]
+        diff = endDatetime - startDatetime
+        diff_in_minutes = diff.total_seconds() / 60
+
+        self.entryControlDict[pair] = []
+        if (diff_in_minutes > 60):            
+            self.entryControlDict[pair].append(current_time)
+            return False
+
+        return True
 
     def populate_exit_trend(self, dataframe: DataFrame, metadata: dict) -> DataFrame:
         """
