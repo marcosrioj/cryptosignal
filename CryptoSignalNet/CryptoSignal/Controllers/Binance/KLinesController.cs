@@ -1,3 +1,4 @@
+using CryptoSignal.Binance.Infra;
 using CryptoSignal.Binance.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,10 +8,10 @@ namespace CryptoSignal.Controllers
     [Route("klines")]
     public class KLinesController : ControllerBase
     {
-        private readonly BinanceInMemoryRepository _binanceRepository;
+        private readonly BinanceRepository _binanceRepository;
 
         public KLinesController(
-            BinanceInMemoryRepository binanceRepository)
+            BinanceRepository binanceRepository)
         {
             _binanceRepository = binanceRepository;
         }
@@ -21,6 +22,22 @@ namespace CryptoSignal.Controllers
             var result = _binanceRepository.GetKLines(interval, limit, symbol, startTime);
 
             return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("CheckAndFix")]
+        public async Task<ActionResult> CheckAndFixAsync()
+        {
+            foreach (var symbol in AppStore.Symbols)
+            {
+                var symbolAppStoreValid = _binanceRepository.IsAppStoreValid(symbol);
+                if (!symbolAppStoreValid)
+                {
+                    await _binanceRepository.AddKlinesFromBinance(symbol);
+                }
+            }
+
+            return Ok();
         }
     }
 }

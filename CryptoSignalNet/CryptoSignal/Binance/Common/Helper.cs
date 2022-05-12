@@ -48,36 +48,36 @@ namespace CryptoSignal.Binance.Common
             }
         }
 
-        public static double GetMilleseconds(KlineInterval eInterval)
+        public static double GetMinutes(KlineInterval eInterval)
         {
             switch (eInterval)
             {
                 case KlineInterval.OneMinute:
-                    return TimeSpan.FromMinutes(1).TotalMilliseconds;
+                    return TimeSpan.FromMinutes(1).TotalMinutes;
                 case KlineInterval.ThreeMinutes:
-                    return TimeSpan.FromMinutes(3).TotalMilliseconds;
+                    return TimeSpan.FromMinutes(3).TotalMinutes;
                 case KlineInterval.FiveMinutes:
-                    return TimeSpan.FromMinutes(5).TotalMilliseconds;
+                    return TimeSpan.FromMinutes(5).TotalMinutes;
                 case KlineInterval.FifteenMinutes:
-                    return TimeSpan.FromMinutes(15).TotalMilliseconds;
+                    return TimeSpan.FromMinutes(15).TotalMinutes;
                 case KlineInterval.ThirtyMinutes:
-                    return TimeSpan.FromMinutes(30).TotalMilliseconds;
+                    return TimeSpan.FromMinutes(30).TotalMinutes;
                 case KlineInterval.OneHour:
-                    return TimeSpan.FromHours(1).TotalMilliseconds;
+                    return TimeSpan.FromHours(1).TotalMinutes;
                 case KlineInterval.TwoHour:
-                    return TimeSpan.FromHours(2).TotalMilliseconds;
+                    return TimeSpan.FromHours(2).TotalMinutes;
                 case KlineInterval.FourHour:
-                    return TimeSpan.FromHours(4).TotalMilliseconds;
+                    return TimeSpan.FromHours(4).TotalMinutes;
                 case KlineInterval.TwelveHour:
-                    return TimeSpan.FromHours(12).TotalMilliseconds;
+                    return TimeSpan.FromHours(12).TotalMinutes;
                 case KlineInterval.OneDay:
-                    return TimeSpan.FromDays(1).TotalMilliseconds;
+                    return TimeSpan.FromDays(1).TotalMinutes;
                 case KlineInterval.OneWeek:
-                    return TimeSpan.FromDays(7).TotalMilliseconds;
+                    return TimeSpan.FromDays(7).TotalMinutes;
                 case KlineInterval.OneMonth:
-                    return TimeSpan.FromDays(30).TotalMilliseconds;
+                    return TimeSpan.FromDays(30).TotalMinutes;
                 default:
-                    return TimeSpan.FromMinutes(1).TotalMilliseconds;
+                    return TimeSpan.FromMinutes(1).TotalMinutes;
             }
         }
 

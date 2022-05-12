@@ -10,8 +10,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<BinanceInMemoryRepository>();
-//builder.Services.AddHostedService<BinanceHostedService>();
+builder.Services.AddScoped<BinanceRepository>();
+builder.Services.AddHostedService<BinanceHostedService>();
 
 
 var app = builder.Build();

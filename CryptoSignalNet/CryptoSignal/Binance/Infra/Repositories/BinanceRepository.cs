@@ -2,11 +2,12 @@
 using CryptoSignal.Binance.Common;
 using CryptoSignal.Binance.Infra;
 using CryptoSignal.Binance.Infra.Entities;
+using System.Net.Http.Headers;
 using System.Text.Json;
 
 namespace CryptoSignal.Binance.Repositories
 {
-    public class BinanceInMemoryRepository
+    public class BinanceRepository
     {
         private static readonly Dictionary<string, Dictionary<KlineInterval, object>> _lock
             = new Dictionary<string, Dictionary<KlineInterval, object>>(
@@ -14,6 +15,45 @@ namespace CryptoSignal.Binance.Repositories
                 (
                     s, AppStore.Intervals.Select(i => new KeyValuePair<KlineInterval, object>(i, new object())).ToDictionary(x => x.Key, x => x.Value)
                 )).ToDictionary(x => x.Key, x => x.Value));
+
+        public bool IsAppStoreValid(string symbol)
+        {
+            foreach (var interval in AppStore.Intervals)
+            {
+                KLine? firstKline = null;
+                KLine? lastKline = null;
+                foreach (var kline in AppStore.KLines[symbol][interval])
+                {
+                    if (firstKline == null || firstKline.OpenTime > kline.OpenTime)
+                    {
+                        firstKline = kline;
+                    }
+
+                    if (lastKline == null || lastKline.OpenTime < kline.OpenTime)
+                    {
+                        lastKline = kline;
+                    }
+                }
+
+                if (firstKline != null && lastKline != null)
+                {
+                    var totalMinutesAppStore = (lastKline.OpenTime - firstKline.OpenTime).TotalMinutes + Helper.GetMinutes(interval);
+                    var rightMinutesAppStore = Helper.GetMinutes(interval) * AppStore.Limit;
+
+                    if (totalMinutesAppStore != rightMinutesAppStore 
+                        || AppStore.KLines[symbol][interval].Count != AppStore.Limit)
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
 
         public object[][] GetKLines(string interval,
             int limit, string symbol, long? startTime = null)
@@ -146,6 +186,58 @@ namespace CryptoSignal.Binance.Repositories
 #pragma warning restore CS8604 // Possible null reference argument.
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
             }
+        }
+
+        public async Task AddKlinesFromBinance(string symbol)
+        {
+            var binanceResultList = new Dictionary<KlineInterval, object[][]?>();
+
+            foreach (var interval in AppStore.Intervals)
+            {
+                var binanceInterval = Helper.GetInterval(interval);
+                var klinesFromBinance = await GetKlinesFromBinance(binanceInterval, AppStore.Limit, symbol);
+
+                binanceResultList[interval] = klinesFromBinance;
+            }
+
+            AddKlinesBinanceToDatabase(binanceResultList, symbol);
+        }
+
+        private static async Task<object[][]?> GetKlinesFromBinance(string interval, int limit, string symbol, long? startTime = null)
+        {
+            var client = GetBinanceClient();
+            var requestUrl = $"klines?interval={interval}&limit={limit}&symbol={symbol}";
+
+            if (startTime != null)
+            {
+                requestUrl = $"{requestUrl}&startTime={startTime}";
+            }
+
+            HttpResponseMessage response = await client.GetAsync(requestUrl);
+
+            object[][]? binanceResult = null;
+
+            if (response.IsSuccessStatusCode)
+            {
+                binanceResult = await response.Content.ReadFromJsonAsync<object[][]>();
+            }
+            else
+            {
+                throw new Exception("Binance request was not sucessful");
+            }
+
+            return binanceResult;
+        }
+
+        private static HttpClient GetBinanceClient()
+        {
+            var client = new HttpClient();
+            client.BaseAddress = new Uri($"https://api.binance.com/api/v3/");
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
+
+            return client;
         }
     }
 }
