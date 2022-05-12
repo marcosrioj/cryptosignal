@@ -3,17 +3,18 @@ from freqtrade.strategy.interface import IStrategy
 from typing import Dict, List
 from functools import reduce
 from pandas import DataFrame
+from datetime import datetime
 # --------------------------------
 import talib.abstract as ta
 import freqtrade.vendor.qtpylib.indicators as qtpylib
 
 class Scalp(IStrategy):
     """
-        this strategy is based around the idea of generating a lot of potentatils buys and make tiny profits on each trade
+        this strategy is based around the idea of generating a lot of potentatils entrys and make tiny profits on each trade
 
         we recommend to have at least 60 parallel trades at any time to cover non avoidable losses.
 
-        Recommended is to only sell based on ROI for this strategy
+        Recommended is to only exit based on ROI for this strategy
     """
 
     # Minimal ROI designed for the strategy.
@@ -24,6 +25,8 @@ class Scalp(IStrategy):
     # Optimal stoploss designed for the strategy
     # This attribute will be overridden if the config file contains "stoploss"
     # should not be below 3% loss
+
+    entryControlDict = {}
 
     stoploss = -0.04
     # Optimal timeframe for the strategy
@@ -47,7 +50,7 @@ class Scalp(IStrategy):
 
         return dataframe
 
-    def populate_buy_trend(self, dataframe: DataFrame, metadata: dict) -> DataFrame:
+    def populate_entry_trend(self, dataframe: DataFrame, metadata: dict) -> DataFrame:
         dataframe.loc[
             (
                 (dataframe['open'] < dataframe['ema_low']) &
@@ -58,10 +61,33 @@ class Scalp(IStrategy):
                     (qtpylib.crossed_above(dataframe['fastk'], dataframe['fastd']))
                 )
             ),
-            'buy'] = 1
+            'enter_long'] = 1
         return dataframe
 
-    def populate_sell_trend(self, dataframe: DataFrame, metadata: dict) -> DataFrame:
+    def confirm_trade_entry(self, pair: str, order_type: str, amount: float, rate: float,
+                            time_in_force: str, current_time: datetime, entry_tag: str,
+                            side: str, **kwargs) -> bool:
+
+        if pair not in self.entryControlDict:
+            self.entryControlDict[pair] = []
+
+        self.entryControlDict[pair].append(current_time)
+        if (len(self.entryControlDict[pair]) < 3):
+            return False
+
+        startDatetime = self.entryControlDict[pair][0]
+        endDatetime = self.entryControlDict[pair][-1]
+        diff = endDatetime - startDatetime
+        diff_in_minutes = diff.total_seconds() / 60
+
+        self.entryControlDict[pair] = []
+        if (diff_in_minutes > 20):            
+            self.entryControlDict[pair].append(current_time)
+            return False
+
+        return True
+
+    def populate_exit_trend(self, dataframe: DataFrame, metadata: dict) -> DataFrame:
         dataframe.loc[
             (
                 (dataframe['open'] >= dataframe['ema_high'])
@@ -70,5 +96,5 @@ class Scalp(IStrategy):
                 (qtpylib.crossed_above(dataframe['fastk'], 70)) |
                 (qtpylib.crossed_above(dataframe['fastd'], 70))
             ),
-            'sell'] = 1
+            'exit_long'] = 1
         return dataframe

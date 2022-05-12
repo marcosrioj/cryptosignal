@@ -149,7 +149,7 @@ class Strategy004(IStrategy):
             self.entryControlDict[pair] = []
 
         self.entryControlDict[pair].append(current_time)
-        if (len(self.entryControlDict[pair]) < 2):
+        if (len(self.entryControlDict[pair]) < 3):
             return False
 
         startDatetime = self.entryControlDict[pair][0]
@@ -158,7 +158,7 @@ class Strategy004(IStrategy):
         diff_in_minutes = diff.total_seconds() / 60
 
         self.entryControlDict[pair] = []
-        if (diff_in_minutes > 60):            
+        if (diff_in_minutes > 180):            
             self.entryControlDict[pair].append(current_time)
             return False
 
