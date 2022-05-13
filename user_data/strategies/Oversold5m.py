@@ -360,6 +360,14 @@ class Oversold5m(IStrategy):
         #         (dataframe['volume'] > 0)  # Make sure Volume is not 0
         #     ),
         #     'enter_long'] = 1
+        dataframe.loc[
+            (
+                (qtpylib.crossed_above(dataframe['rsi'], self.buy_rsi.value)) &  # Signal: RSI crosses above buy_rsi
+                (dataframe['tema'] <= dataframe['bb_middleband']) &  # Guard: tema below BB middle
+                (dataframe['tema'] > dataframe['tema'].shift(1)) &  # Guard: tema is raising
+                (dataframe['volume'] > 0)  # Make sure Volume is not 0
+            ),
+            'enter_long'] = 0
         # Uncomment to use shorts (Only used in futures/margin mode. Check the documentation for more info)
 
         dataframe.loc[
@@ -388,6 +396,14 @@ class Oversold5m(IStrategy):
         #         (dataframe['volume'] > 0)  # Make sure Volume is not 0
         #     ),
         #     'exit_long'] = 1
+        dataframe.loc[
+        (
+            (qtpylib.crossed_above(dataframe['rsi'], self.sell_rsi.value)) &  # Signal: RSI crosses above sell_rsi
+            (dataframe['tema'] > dataframe['bb_middleband']) &  # Guard: tema above BB middle
+            (dataframe['tema'] < dataframe['tema'].shift(1)) &  # Guard: tema is falling
+            (dataframe['volume'] > 0)  # Make sure Volume is not 0
+        ),
+        'exit_long'] = 0
         # Uncomment to use shorts (Only used in futures/margin mode. Check the documentation for more info)
 
         dataframe.loc[
