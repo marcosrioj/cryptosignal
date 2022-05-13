@@ -6,6 +6,7 @@
 logfile.txt
 user_data/backtest_results/*
 user_data/data/binance/*USDT*.json
+user_data/data/binance/futures/*USDT*.json
 user_data/*.sqlite-shm
 user_data/*.sqlite-wal
 user_data/hyperopt_results/*

@@ -18,6 +18,7 @@ C:\repos\freqtrade_bin\.env\Lib\site-packages\ccxt\async_support\base\exchange.p
 Add it:
         if "/klines?" in url and "startTime" not in url:
             url = url.replace("https://api.binance.com/api/v3", "http://localhost:5000")
+            url = url.replace("https://fapi.binance.com/fapi/v1", "http://localhost:5000")
 
 # Ideas
 ## Criar no APP o conceito notificacoes a partir de alertas (Normais indicadores) e signals (Strategias rodadas no freqtrade)
