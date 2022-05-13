@@ -1,1 +1,1 @@
-C:\repos\freqtrade_bin\.env\Scripts\freqtrade download-data --exchange binance -t 1m --days 7
+C:\repos\freqtrade_bin\.env\Scripts\freqtrade download-data --exchange binance -t 5m --days 30
