@@ -91,7 +91,6 @@ namespace CryptoSignal.Binance.Infra
             ,"CHZUSDT"
             ,"SANDUSDT"
             ,"ANKRUSDT"
-            ,"LUNAUSDT"
             ,"BTSUSDT"
             ,"LITUSDT"
             ,"UNFIUSDT"
